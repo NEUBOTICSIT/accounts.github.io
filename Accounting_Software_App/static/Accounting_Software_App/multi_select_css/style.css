@@ -1,0 +1,119 @@
+/*!
+ * Bootstrap v4.3.1 (https://getbootstrap.com/)
+ * Copyright 2011-2019 The Bootstrap Authors
+ * Copyright 2011-2019 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+
+
+
+
+
+.select2-results__option {
+  padding-right: 20px;
+  vertical-align: middle;
+ }
+
+.select2-results__option:before {
+  content: "";
+  display: inline-block;
+  position: relative;
+  height: 20px;
+  width: 20px;
+  border: 2px solid #ced4da;
+  border-radius: 4px;
+  background-color: transparent;
+  margin-right: 15px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+.select2-results__option[aria-selected=true]:before {
+  font-family: 'fontAwesome';
+  content: "\f00c";
+  color: #fff;
+  background-color: #0d6efd;
+  border: 0;
+  display: inline-block;
+  padding: 0;
+  line-height: 1.2;
+  padding-left: 2px; 
+  
+}
+
+.select2-container--default .select2-results__option[aria-selected=true] {
+  background-color: #fff; 
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: #fff;
+  color: #000; }
+  
+
+/* .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
+  border-radius: 4px;
+  -webkit-box-shadow: 0px 3px 22px -15px rgba(0, 0, 0, 0.8);
+  -moz-box-shadow: 0px 3px 22px -15px rgba(0, 0, 0, 0.8);
+  box-shadow: 0px 3px 22px -15px rgba(0, 0, 0, 0.8); } */
+
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+  border-color: #ced4da;
+  }
+
+.select2-container--default .select2-selection--multiple {
+  border-color: #ced4da;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  margin-bottom: 10px;
+  -webkit-box-shadow: 0px 3px 22px -15px #ced4da;
+  -moz-box-shadow: 0px 3px 22px -15px #ced4da;
+  box-shadow: 0px 3px 22px -15px #ced4da; }
+  @media (prefers-reduced-motion: reduce) {
+    .select2-container--default .select2-selection--multiple {
+      -webkit-transition: none;
+      -o-transition: none;
+      transition: none; } }
+
+.select2-container--open .select2-dropdown--below {
+  padding: 10px 0;
+  border-radius: 4px;
+  border: none;
+  -webkit-box-shadow: 0px 3px 22px -15px #ced4da;
+  -moz-box-shadow: 0px 3px 22px -15px #ced4da;
+  box-shadow: 0px 3px 22px -15px #ced4da; }
+
+.select2-selection .select2-selection--multiple:after {
+  content: 'hhghgh'; }
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  border: none;
+  background: rgba(0, 0, 0, 0.1);
+  font-size: 15px;
+  padding: 2px 10px;
+  color: gray; 
+  }
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+  margin-right: 5px;
+  color:red }
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+color: rgb(179, 11, 11)
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__clear {
+  color: red; }
+
+
+
+
+
+
+
+
+
+
+
+

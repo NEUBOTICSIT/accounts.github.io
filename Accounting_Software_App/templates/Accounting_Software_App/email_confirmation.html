@@ -1,0 +1,9 @@
+{% autoescape off %}
+Welcome to Django Login
+ hello {{ name }}!
+
+ Please confirm your email by clicking on the  following link.
+
+ Confirmation Link : http://{{ domain }}{% url 'Accounting_Software_App:activate' uidb64=uid token=token %}
+
+{% endautoescape %}

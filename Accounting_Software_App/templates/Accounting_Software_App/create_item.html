@@ -1,0 +1,270 @@
+{% extends 'Accounting_Software_App/base_code/base.html' %}
+{% block content %}
+{% include "Accounting_Software_App/head_content.html" %}
+{% load static %}
+
+<main class="content">
+	<div class="container-fluid p-0">
+		<div class="mb-3">
+			<a href="{% url 'Accounting_Software_App:items' user_id org_id company_id %}"><i class="align-middle me-2" data-feather="chevrons-left"></i></a><h1 class="h3 d-inline align-middle">New Item</h1>						
+		</div>
+		<div class="row ">
+			<div class="col-12 mb-2 " style="text-align:center">
+				{%for message in messages %}
+					<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+						<strong>Messages:</strong>{{ message }}
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+				{% endfor %}
+			</div>
+		</div>
+		<form action="" method="POST" enctype="multipart/form-data">{% csrf_token %}	
+			<div class="row ">
+				<div class="form-check form-switch d-flex justify-content-end" >
+					<input class="form-check-input form-control" type="checkbox" role="switch" value="True" name="enable" id="flexSwitchCheckDefault" checked>
+					<label class="form-check-label" for="flexSwitchCheckDefault">Enable</label>
+				</div>
+			</div>
+			<div class="row mt-4">
+				<div class="col-12 col-lg-6">
+					<div class="card">
+						<div class="card-header">
+							<h5 class="card-title mb-0">Item Name</h5>
+						</div>
+					    <div class="card-body">
+							<input type="text" class="form-control" name="item_name" value="" placeholder="Item Name" required>
+						</div>
+					</div>
+				</div>                       
+                <div class="col-12 col-lg-6">
+					<div class="card">
+						<div class="card-header">
+							<h5 class="card-title mb-0">Select Tax</h5>
+						</div>
+						<div class="card-body">	
+							<div class="dropdown tax_dropdown">
+								<button class="btn form-control form-select " type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border:solid 1px #ced4da;width:450px;text-align:left;color:#212529;">
+									<span id="selected_tax">Select Tax</span>
+								</button>
+								<ul class="dropdown-menu mt-5" style="width:450px">
+									{% if all_taxes %}
+										{% for i in all_taxes %}
+										  <li  ><a class="dropdown-item tax_dropdown-item" href="#">{{i.name}}</a></li>
+										{% endfor %}
+									{% endif %}		
+									<li><hr class="dropdown-divider" style="color:#ced4da"></li>
+									<li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#taxModal" href="#">Add Tax</a></li>
+								</ul>
+							</div> 
+						</div>
+				    </div>						
+			    </div>
+			</div>								
+			<div class="row">
+				<div class="col-12 col-lg-12">
+				    <div class="card">
+						<div class="card-header">
+							<h5 class="card-title mb-0">Description</h5>
+						</div>
+						<div class="card-body">
+							<textarea class="form-control" type="text" rows="3" name="description" required> </textarea>	
+						</div>
+					</div> 
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 col-lg-6">
+                    <div class="card">
+						<div class="card-header">
+							<h5 class="card-title mb-0">Sale Price </h5>
+						</div>
+						<div class="card-body">
+							<input type="text" class="form-control" name="sale_price" value="" placeholder="Enter Sale Price" required>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 col-lg-6">
+					<div class="card">
+						<div class="card-header">
+							<h5 class="card-title mb-0">Purchase Price</h5>
+						</div>
+						<div class="card-body">
+							<input type="text" class="form-control" name="purchase_price" value="" placeholder="Enter Purchase Price" required>
+						</div>
+					</div>						
+				</div>
+			</div>	
+			<div class="row">						
+				<div class="col-12 col-lg-6">
+					<div class="card">
+						<div class="card-header">
+							<h5 class="card-title mb-0">Select Category</h5>
+						</div>
+						<div class="card-body">	
+							<div class="dropdown category_dropdown">
+								<button class="btn form-control form-select " type="button" data-bs-toggle="dropdown" aria-expanded="false" style="border:solid 1px #ced4da;width:450px;text-align:left;color:#212529;">
+									<span id="selected_category">Select Category</span>
+								</button>
+								<ul class="dropdown-menu mt-5" style="width:450px" id="click_category">
+									{% if all_item_category %}
+										{% for i in all_item_category %}
+										  <li  ><a class="dropdown-item category_dropdown-item" href="#">{{i.name}}</a></li>
+										{% endfor %}
+									{% endif %}		
+									<li><hr class="dropdown-divider" style="color:#ced4da"></li>
+									<li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#">Add Category</a></li>
+								</ul>
+							</div> 
+						</div>
+					</div>						
+				</div>
+				<div class="col-12 col-lg-6">
+                    <div class="card">
+						<div class="card-header">
+							<h5 class="card-title mb-0">Upload Photo</h5>
+						</div>
+						<div class="card-body">
+							<input type="file" class="form-control" name="picture" value="" >
+						</div>
+					</div>
+				</div>						
+			</div>	
+		    <hr>	
+			<div class="mt-12" style="text-align:right">
+				<a href="{% url 'Accounting_Software_App:items' user_id org_id company_id %}" class="btn btn-lg btn-light">Cancel</a>  
+				<button type="submit" class="btn btn-lg btn-primary">Save</button> 
+			</div>
+	    </form>
+	</div>
+</main>
+
+
+<!-- Add Category Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="exampleModalLabel">New Category</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form id="category_form" action="{% url 'Accounting_Software_App:add_new_category' user_id org_id company_id %}" method="POST">{% csrf_token %}
+                    <div class="row">
+						<div class="col-12 col-lg-12">
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0"> Name</h5>
+								</div>
+								<div class="card-body">
+									<input type="text" class="form-control"  name="cat_name" id="cat_name" value="" placeholder="Enter Name">
+								</div>
+							</div>
+						</div>	
+					</div>
+					<div class="row">					
+						<div class="col-12 col-lg-12">
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0">Color</h5>
+								</div>
+								<div class="card-body">
+									<input type="color" name="color"  id="color" value="#ff0000" style="width:50px">														
+								</div>
+							</div>
+						</div>	               
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary">Save Category</button>
+					</div> 
+			    </form>
+		    </div>
+	    </div>
+    </div>
+</div>
+<!--End Add Category Modal -->
+<!-- Add Tax Modal -->
+<div class="modal fade" id="taxModal" tabindex="-1" aria-labelledby="taxModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="taxModalLabel">New Tax</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form id="category_form" action="{% url 'Accounting_Software_App:add_new_tax' user_id org_id company_id %}" method="POST">{% csrf_token %}
+                    <div class="row">
+						<div class="col-12 col-lg-12">
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0"> Name</h5>
+								</div>
+								<div class="card-body">
+									<input type="text" class="form-control" name="tax_name" value="" placeholder="Enter Name">
+								</div>
+							</div>
+						</div>													                 
+					</div>
+					<div class="row">
+						<div class="col-12 col-lg-6">
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0">Rate</h5>
+								</div>
+                                <div class="card-body">
+									<input type="text" class="form-control" name="rate" value="" placeholder="Enter Rate">
+								</div>
+							</div>
+						</div>    						
+                        <div class="col-12 col-lg-6">
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0">Select Type</h5>
+								</div>
+								<div class="card-body">									
+									<select class="form-select" name="tax_type" required ">
+										<option value="Compound">Compound</option>
+										<option value="Fixed">Fixed</option>
+										<option value="Inclusive">Inclusive</option>
+										<option value="Normal">Normal</option>
+                                        <option value="Withholding" >Withholding</option>
+									</select>
+								</div>
+							</div>						
+						</div> 											                  
+					</div>
+				    <div class="modal-footer">
+					    <button type="submit" class="btn btn-primary">Save Tax</button>
+			        </div> 
+			    </form>
+		    </div>
+	    </div>
+    </div>
+</div>
+<!--End Add Tax Modal -->
+
+
+
+
+
+<!--chosen dropdown cnd link  and function-->
+    <!--js-->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <!--choosen-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+    <!--function-->
+	{% comment %} <script>
+        jQuery('.search_select_box').chosen();
+    </script> {% endcomment %}
+<!--end chosen dropdown cnd link --> 
+
+
+<!-- onclick ,category dropdown value selected  -->
+<script>
+$(".category_dropdown").on('click', '.category_dropdown-item', function(e) {
+  var text = $(this).text();
+  $("#selected_category").html(text)
+});
+</script>
+
+
+{% endblock content %}

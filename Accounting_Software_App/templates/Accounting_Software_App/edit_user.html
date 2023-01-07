@@ -1,0 +1,189 @@
+{% extends 'Accounting_Software_App/base_code/base.html' %}
+{% block content %}
+{% include "Accounting_Software_App/head_content.html" %}
+
+{% load static %}
+
+         <main class="content">
+				<div class="container-fluid p-0">
+					<div class="mb-3">
+						{% if user_id == edit_user_id %}
+						    <a href="{% url 'Accounting_Software_App:profile' user_id org_id company_id %}"><i class="align-middle me-2" data-feather="chevrons-left"></i></a><h1 class="h3 d-inline align-middle">Edit User</h1>						
+					    {% else %}
+						    <a href="{% url 'Accounting_Software_App:users' user_id org_id company_id %}"><i class="align-middle me-2" data-feather="chevrons-left"></i></a><h1 class="h3 d-inline align-middle">Edit User</h1>						
+						{% endif %}
+					</div>
+					<div class="row ">
+						<div class="col-12 mb-2 " style="text-align:center">
+							{%for message in messages %}
+								<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+									<strong>Messages:</strong>{{ message }}
+									<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>      
+							    </div>
+							{% endfor %}
+						</div>
+					</div>
+				<form action="" method="POST">{% csrf_token %}	
+					<div class="row">
+						<div class="col-12 col-lg-6">
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0">First Name</h5>
+								</div>
+								<div class="card-body">
+									<input type="text" class="form-control" name="first_name" value="{{edit_info.first_name}}" placeholder="First Name" required>
+								</div>
+							</div>
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0">Email</h5>
+								</div>
+								<div class="card-body">
+									<input type="text" class="form-control" name="email" value="{{edit_info.email}}" placeholder="Email" required>
+								</div>
+							</div>
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0">Password </h5>
+								</div>
+								<div class="card-body">
+									<input type="text" class="form-control" name="psw" value="" placeholder="Enter Password " required>
+								</div>
+							</div>     
+							{% comment %} {% if not request.user %}                     {% endcomment %}
+							<div class="card">
+									<div class="card-header">
+										<h5 class="card-title mb-0">Role</h5>
+									</div>
+									<div class="card-body">
+										<input type="text" class="form-control" id="user_role_text" name="role" value="{{edit_info.role}}" placeholder="Role"  hidden required> 	
+										<div>
+											<label class="form-check form-check-inline">
+												<input class="form-check-input radioCheck" type="checkbox" id="user_admin"  value="Admin" onclick="check(this);">
+												<span class="form-check-label radioCheck">
+												Admin
+												</span>
+											</label>
+											<label class="form-check form-check-inline">
+												<input class="form-check-input radioCheck" type="checkbox" id="user_only"  value="User" onclick="check(this);">
+												<span class="form-check-label">
+												User
+												</span>
+											</label>											
+										</div> 										
+									</div>
+							</div>	
+						</div>
+						<div class="col-12 col-lg-6">
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0">Last Name</h5>
+								</div>
+								<div class="card-body">
+									<input type="text" class="form-control" name="last_name" value="{{edit_info.last_name}}" placeholder="Last Name" required>
+								</div>
+							</div>
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0">Select Companies</h5>
+								</div>
+								<div class="card-body" style="margin-bottom:-10px">	
+										<select class="js-select2 form-select" multiple="multiple"  name="company">
+											{% for fetch_org in edit_info.company_name %}<option selected >{{fetch_org}}</option>{% endfor %} 
+											
+											{% for i in distinct_list %}			 
+													<option value="{{i}}" data-badge="">{{i}}</option>
+											  {% endfor %} 
+											  
+										</select>
+								</div>
+							</div>
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0">Confirm Password </h5>
+								</div>
+								<div class="card-body">
+									<input type="text" class="form-control" name="psw_repeat" value="" placeholder="Enter Confirm Password " required>
+								</div>
+							</div>	
+							<div class="form-check form-switch">
+								{% if edit_info.enable == 1 %}
+								<input class="form-check-input" type="checkbox" role="switch" value="True" name="enable" id="flexSwitchCheckDefault" checked>
+								{% else %}
+								<input class="form-check-input" type="checkbox" role="switch" value="True" name="enable" id="flexSwitchCheckDefault" >
+								{% endif %}
+								<label class="form-check-label" for="flexSwitchCheckDefault">Enable</label>
+							</div>	
+						</div>
+						<hr>	
+					    <div class="text-center mt-12">
+							<a href="{% url 'Accounting_Software_App:users' user_id org_id company_id %}" type="text" class="btn btn-lg btn-light">Cancel</a>  
+							<button type="submit" class="btn btn-lg btn-primary">Save</btton> 
+						</div>
+					</div>
+				</form>
+				</div>
+			</main>
+
+
+<!--script for Role checkbox value pass in input textfield-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+		$(document).ready(function() {				  
+			$('#user_admin').click(function() {
+				if ($('#user_admin').is(":checked") == true) {
+					$('#user_role_text').val('Admin');
+				} else {
+					$('#user_role_text').val('');
+				}
+			});
+				  
+			// if checkbox2 checked.
+			$('#user_only').change(function() {
+				if ($('#user_only').is(":checked") == true) {
+					$('#user_role_text').val('User');
+				} else {
+					$('#user_role_text').val('');
+				}
+			});
+		});
+</script> 
+<!--end script for checkbox value pass in input textfield-->
+
+<!--if one checkbox of role field is checked then anather unchecked-->
+<script>
+	function check(input){
+		var checkboxes = document.getElementsByClassName("radioCheck");
+			for(var i = 0; i < checkboxes.length; i++){
+					   //uncheck all
+					if(checkboxes[i].checked == true){
+						checkboxes[i].checked = false;
+					}
+				}   
+				//set checked of clicked object
+				   if(input.checked == true){
+					   input.checked = false;
+				   }else{
+					   input.checked = true;
+				   }	
+			   }
+</script>
+<!--end if one checkbox of role field is checked then anather unchecked-->
+
+<!--if db_role value equal to User then check User checkbox,else check Admin-->
+<script>
+ $(document).ready(function() {	
+	 var db_role=document.getElementById("user_role_text").value
+	 var user_admin=document.getElementById("user_admin").value
+	 var user_only=document.getElementById("user_only").value
+	 if (db_role==user_admin){
+	   document.getElementById("user_admin").checked = true;
+	 }
+	 if (db_role==user_only){
+	   document.getElementById("user_only").checked = true;
+	 }
+  });
+</script>
+<!--End if db_role value equal to User then check User checkbox,else check Admin-->
+{% endblock content %}
+

@@ -1,0 +1,144 @@
+{% extends 'Accounting_Software_App/base_code/base.html' %}
+{% block content %}
+{% include "Accounting_Software_App/head_content.html" %}
+{% load static %}
+
+<main class="content">
+<div class="container-fluid p-0">
+    <div class="row mb-4">
+		<div class="col-6">
+			<h1 class="h3 mb-3">Companies</h1>
+		</div>
+		<div class="col-6" style="text-align:right"> 
+			<a href="{% url 'Accounting_Software_App:create_company_book' user_id org_id company_id %}"><button class="btn btn-success">Add new</button></a>
+		</div>
+        <div class="row ">
+			<div class="col-12 mb-2 " style="text-align:center">
+			{%for message in messages %}
+				<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+					<strong>Messages:</strong>{{ message }}
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+			{% endfor %}
+			</div>
+		</div>
+	</div>
+{% if company_book %} 
+<!-- row for defalt company-->                  
+<div class="row">
+	<div class="col-12">
+        <div class="card">
+			<div class="card-header">
+				<table class="table">
+					<thead class="thead-dark">
+						{% if default_company_book == selected_company %}
+						    <tr>
+								<th scope="col">Default Company</th>
+								<td>{{default_company_book.company}}</td>
+								<td>{{default_company_book.email}}</td>
+								<td>{{default_company_book.created_at}}</td>
+								<td><span class="badge rounded-pill bg-primary">Selected</span></td>													
+							</tr>
+						{% else %}
+							<tr>
+								<th scope="col">Default Company</th>
+								<td>{{default_company_book.company}}</td>
+								<td>{{default_company_book.email}}</td>
+								<td>{{default_company_book.created_at}}</td>
+                            </tr>
+						{% endif %}
+					</thead>										
+				</table>		
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-12 col-lg-12 col-xxl-12 d-flex">
+		<div class="card flex-fill">
+			<table class="table table-hover my-0 sortable"  id="myTable">
+				<thead>
+					<tr class="table-dark">
+						<th scope="col"><input class="form-check-input" type="checkbox" value=""></th>
+						<th scope="col"><i class="align-middle me-2" data-feather="user"></i>Name <i class="fas fa-sort"  style="cursor: pointer"></th>
+						<th scope="col"><i class="align-middle me-2" data-feather="mail"></i>Email <i class="fas fa-sort"  style="cursor: pointer"></i></th>
+						<th scope="col"><i class="align-middle me-2" data-feather="user-check"></i>Created <i class="fas fa-sort"  style="cursor: pointer"></th>
+						<th scope="col"><i class="align-middle me-2" data-feather="toggle-left"></i>Enable </th>
+						<th scope="col"><i class="align-middle me-2" data-feather="edit"></i>Action </th>
+					</tr>
+				</thead>
+                <tbody>
+                {% if default_company_book != selected_company %}
+					<tr class="table-active">
+						<td scope="col"><input class="form-check-input" type="checkbox" value=""></td>
+						<td>{{ selected_company.company }}</td>
+						<td>{{ selected_company.email }}</td>
+						<td>{{ selected_company.created_at }}</td>																			
+						<td>
+							<div class="form-check form-switch">
+								{% if selected_company.enable == 1 %}
+									<input class="form-check-input" type="checkbox" role="switch" value="True" name="enable" id="flexSwitchCheckDefault" checked>
+								{% else %}
+								    <input class="form-check-input" type="checkbox" role="switch" value="True" name="enable" id="flexSwitchCheckDefault" >
+								{% endif %}
+							</div>
+						</td>
+						<td>
+							<div class="dropdown">
+								<a class="btn btn-LIGHT" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">...</a>
+								<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+									<li><a class="dropdown-item" href="{% url 'Accounting_Software_App:edit_company'  user_id org_id company_id selected_company.id %}">Edit</a></li>
+									<form action="{% url 'Accounting_Software_App:delete_company' user_id org_id company_id selected_company.id %}" method="POST">{% csrf_token %}
+									    <input class="dropdown-item" type="submit" value="delete" style="border:none;background-color:white" onclick="return confirm('Do you want to delete the record?');"> 
+									</form>
+								</ul>
+							</div>
+						</td>
+					</tr>
+				   {% endif %}
+					{% for i in manage_company_book %}
+					<tr>
+						<td scope="col"><input class="form-check-input" type="checkbox" value=""></td>
+						<td>{{ i.company }}</td>
+						<td>{{ i.email }}</td>
+						<td>{{ i.created_at }}</td>
+						<td>
+							<div class="form-check form-switch">
+								{% if i.enable == 1 %}
+									<input class="form-check-input" type="checkbox" role="switch" value="True" name="enable" id="flexSwitchCheckDefault" checked>
+								{% else %}
+									<input class="form-check-input" type="checkbox" role="switch" value="True" name="enable" id="flexSwitchCheckDefault" >
+								{% endif %}
+							</div>
+						</td>
+						<td>
+							<div class="dropdown">
+								<a class="btn btn-LIGHT" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">...</a>
+								<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+									<li><a class="dropdown-item" href="{% url 'Accounting_Software_App:edit_company'  user_id org_id company_id i.id %}">Edit</a></li>
+									<form action="{% url 'Accounting_Software_App:delete_company' user_id org_id company_id i.id %}" method="POST">{% csrf_token %}
+									<input class="dropdown-item" type="submit" value="delete" style="border:none;background-color:white" onclick="return confirm('Do you want to delete the record?');"> 
+									</form>
+								</ul>
+							</div>
+						</td>
+					</tr>
+				    {% endfor %}	
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+{% else %}
+	<div class="row">
+		<div class="col-12">
+			<h3 class="text-center alert alert-warning">No Records</h3>
+		</div>
+	</div>
+{% endif %}
+</div>
+</main>
+
+
+<!--sorting table - footer.html-->
+{% endblock content %}

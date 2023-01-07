@@ -1,0 +1,78 @@
+{% extends 'Accounting_Software_App/base_code/base.html' %}
+{% block content %}
+{% include "Accounting_Software_App/head_content.html" %}
+{% load static %}
+
+<main class="content">
+				<div class="container-fluid p-0">
+
+					<h1 class="h3 mb-3">Settings</h1>
+
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								
+								<div class="card-body">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col p-4">
+                                        <a href="{% url 'Accounting_Software_App:edit_organisation' user_id org_id company_id org_id%}" style="text-decoration:none"><div class="row setting_row" ><div class="col-3"><img src="{% static "Accounting_Software_App/img/photos/organisation.png" %}" height="40px" width="40px" alt=''></div><div class="col-9"><h5>Organisation</h5></div></div></a>
+                                        </div>
+                                        <div class="col p-4">
+                                        <a href="{% url 'Accounting_Software_App:edit_company' user_id org_id company_id company_id%}" style="text-decoration:none"><div class="row setting_row"><div class="col-3"><img src="{% static "Accounting_Software_App/img/photos/company.png" %}" height="40px" width="40px" alt=''></div><div class="col-9"><h5>Company</h5></div></div></a>
+                                        </div>
+                                        <div class="col p-4">
+                                        <a href="" style="text-decoration:none"><div class="row setting_row"><div class="col-3"><img src="{% static "Accounting_Software_App/img/photos/localisation.png" %}" height="40px" width="40px" alt=''></div><div class="col-9"><h5>Localisation</h5></div></div></a>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col p-4">
+                                        <a href="" style="text-decoration:none"><div class="row setting_row"><div class="col-3"><img src="{% static "Accounting_Software_App/img/photos/invoice.png" %}" height="40px" width="40px" alt=''></div><div class="col-9"><h5>Invoice</h5></div></div></a>
+                                        </div>
+                                        <div class="col p-4">
+                                        <a href="" style="text-decoration:none"><div class="row setting_row"><div class="col-3"><img src="{% static "Accounting_Software_App/img/photos/default.png" %}" height="40px" width="40px" alt=''></div><div class="col-9"><h5>Default</h5></div></div></a>
+                                        </div>
+                                        <div class="col p-4">
+                                        <a href="" style="text-decoration:none"><div class="row setting_row"><div class="col-3"><img src="{% static "Accounting_Software_App/img/photos/email.png" %}" height="40px" width="40px" alt=''></div><div class="col-9"><h5>Email</h5></div></div></a>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col p-4">
+                                        <a href="" style="text-decoration:none"><div class="row setting_row"><div class="col-3"><img src="{% static "Accounting_Software_App/img/photos/scheduling.png" %}" height="40px" width="40px" alt=''></div><div class="col-9"><h5>Scheduling</h5></div></div></a>
+                                        </div>
+                                        <div class="col p-4">
+                                        <a href="{% url 'Accounting_Software_App:categories' user_id org_id company_id %}" style="text-decoration:none"><div class="row setting_row"><div class="col-3"><img src="{% static "Accounting_Software_App/img/photos/categories.png" %}" height="40px" width="40px" alt=''></div><div class="col-9"><h5>Categories</h5></div></div></a>
+                                        
+                                        </div>
+                                        <div class="col p-4">
+                                        <a href="" style="text-decoration:none"><div class="row setting_row"><div class="col-3"><img src="{% static "Accounting_Software_App/img/photos/crrencies.png" %}" height="40px" width="40px" alt=''></div><div class="col-9"><h5>Crrencies</h5></div></div></a>
+                                        
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col p-4">
+                                        <a href="{% url 'Accounting_Software_App:taxes' user_id org_id company_id %}" style="text-decoration:none"><div class="row setting_row"><div class="col-3"><img src="{% static "Accounting_Software_App/img/photos/taxes.png" %}" height="40px" width="40px" alt=''></div><div class="col-9"><h5>Taxes</h5></div></div></a>
+                                        
+                                        </div>
+                                        <div class="col p-4">
+                                        
+                                        <a href="" style="text-decoration:none"><div class="row setting_row"><div class="col-3"><img src="{% static "Accounting_Software_App/img/photos/paypal.png" %}" height="40px" width="40px" alt=''></div><div class="col-9"><h5>Paypal Standard</h5></div></div></a>
+                                        </div>
+                                        <div class="col p-4">                                        
+                                        <a href="" style="text-decoration:none"><div class="row setting_row"><div class="col-3"><img src="{% static "Accounting_Software_App/img/photos/Offline_Payments.png" %}" height="40px" width="40px" alt=''></div><div class="col-9"><h5>Offline Payments</h5></div></div></a>
+                                        </div>
+                                    </div>
+                                </div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</main>
+
+
+
+
+
+{% endblock content %}

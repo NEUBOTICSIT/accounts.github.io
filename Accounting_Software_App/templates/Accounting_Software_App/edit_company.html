@@ -1,0 +1,167 @@
+{% extends 'Accounting_Software_App/base_code/base.html' %}
+
+{% block content %}
+{% include "Accounting_Software_App/head_content.html" %}
+
+{% load static %}
+
+
+
+            <main class="content">
+				<div class="container-fluid p-0">
+					<div class="mb-3">
+						<a href="{% url 'Accounting_Software_App:manage_company' user_id org_id company_id %}"><i class="align-middle me-2" data-feather="chevrons-left"></i></a><h1 class="h3 d-inline align-middle">Edit Company</h1>						
+					</div>
+
+					<div class="row ">
+						<div class="col-12 mb-2 " style="text-align:center">
+							{% if messages %}
+							{%for message in messages %}
+								<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+								<strong>Messages:</strong>{{ message }}
+								<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+							{% endfor %}
+							{% endif %}
+						</div>
+					</div>
+				<form action="" method="POST">{% csrf_token %}
+					<div class="row ">
+						<div class="form-check form-switch d-flex justify-content-end" >
+							{% if edit_info.enable == 1 %}
+							<input class="form-check-input" type="checkbox" role="switch" value="True" name="enable" id="flexSwitchCheckDefault" checked>
+							{% else %}
+							<input class="form-check-input" type="checkbox" role="switch" value="True" name="enable" id="flexSwitchCheckDefault" >
+							{% endif %}
+							<label class="form-check-label" for="flexSwitchCheckDefault">Enable</label>
+					    </div>
+					</div>	
+					<div class="row">
+						<div class="col-12 col-lg-6">
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0">Company Name</h5>
+								</div>
+								<div class="card-body">
+									<input type="text" class="form-control" name="company" value="{{edit_info.company}}" placeholder="Company Name" required>
+								</div>
+							</div>
+						</div>
+                        <div class="col-12 col-lg-6">
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0">Email</h5>
+								</div>
+								<div class="card-body">
+									<input type="text" class="form-control" name="email" value="{{edit_info.email}}" placeholder="Email" required>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12 col-lg-6">
+                          <div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0">Currency </h5>
+								</div>
+								<div class="card-body">
+									<input type="text" class="form-control" name="currency" value="{{edit_info.currency}}" placeholder="Currency" required>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-lg-6">
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0">Tax Number </h5>
+								</div>
+								<div class="card-body">
+									<input type="text" class="form-control" name="tax_num" value="{{edit_info.tax_num}}" placeholder="Tax Number" required>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+
+							
+					<div class="row">
+					 <div class="col-12 col-lg-12">
+						<div class="card">
+							<div class="card-header">
+								<h5 class="card-title mb-0">Address</h5>
+							</div>
+							<div class="card-body">
+								<textarea type="text" rows="3" name="company_address" style="width:100%;border-radius: 0.25rem;border: 1px solid #ced4da;" required>{{edit_info.company_address}}</textarea>	
+							</div>
+						</div> 
+					 </div>
+					</div>
+					<div class="row">
+						<div class="col-12 col-lg-6">
+                          <div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0">Phone </h5>
+								</div>
+								<div class="card-body">
+									<input type="text" class="form-control" name="phone_number" value="{{edit_info.phone_number}}" placeholder="Phone" required>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-lg-6">
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0">Postal / Zip Code</h5>
+								</div>
+								<div class="card-body">
+									<input type="text" class="form-control" name="zip_code" value="{{edit_info.zip_code}}" placeholder="Postal / Zip Code" required>
+								</div>
+							</div>
+							
+						</div>
+					</div>	
+					<div class="row">
+						<div class="col-12 col-lg-6">
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0">Town / City</h5>
+								</div>
+								<div class="card-body">
+									<input type="text" class="form-control" name="city" value="{{edit_info.city}}" placeholder="Town / City" required>
+								</div>
+							</div>
+							
+						</div>
+						<div class="col-12 col-lg-6">
+                          <div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0">Province / State</h5>
+								</div>
+								<div class="card-body">
+									<input type="text" class="form-control" name="state" value="{{edit_info.state}}" placeholder="Province / State" required>
+								</div>
+							</div>
+						</div>
+						
+					</div>	
+					{% comment %} <div class="form-check form-switch">
+						{% if edit_info.enable == 1 %}
+						   <input class="form-check-input" type="checkbox" role="switch" value="True" name="enable" id="flexSwitchCheckDefault" checked>
+						{% else %}
+						   <input class="form-check-input" type="checkbox" role="switch" value="True" name="enable" id="flexSwitchCheckDefault" >
+						{% endif %}
+						<label class="form-check-label" for="flexSwitchCheckDefault">Enable</label>
+					</div>												 {% endcomment %}
+				    </div>
+				<hr>	
+					<div class="mt-12" style="text-align:right">
+						<a href="{% url 'Accounting_Software_App:manage_company' user_id org_id company_id %}" class="btn btn-lg btn-light">Cancel</a>  
+						<button type="submit" class="btn btn-lg btn-primary">Save</button> 
+					</div>
+					</div>
+				 </form>
+				</div>
+			</main>
+
+
+{% endblock content %}
+

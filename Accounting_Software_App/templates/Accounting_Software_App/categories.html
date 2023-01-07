@@ -1,0 +1,91 @@
+{% extends 'Accounting_Software_App/base_code/base.html' %}
+{% block content %}
+{% include "Accounting_Software_App/head_content.html" %}
+{% load static %}
+
+<main class="content">
+	<div class="container-fluid p-0">
+        <div class="row mb-4">
+			<div class="col-6">
+				<h1 class="h3 mb-3">Category</h1>
+			</div>                 
+			<div class="col-6" style="text-align:right"> 
+				<a href="{% url 'Accounting_Software_App:create_categories' user_id org_id company_id %}"><button class="btn" style="background-color:#6da252;color:white">Add new</button></a>
+			    <button type="button" class="btn btn-outline-secondary">Import</button>
+                <button type="button" class="btn btn-outline-secondary">Export</button> 
+            </div>
+				<div class="row ">
+				<div class="col-12 mb-2 " style="text-align:center">
+				{%for message in messages %}
+					<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+						<strong>Messages:</strong>{{ message }}
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+				{% endfor %}
+				</div>
+			</div>
+		</div>
+    {% if all_categories %} 
+	<div class="row">
+		<div class="col-12 col-lg-12 col-xxl-12 d-flex">
+			<div class="card flex-fill">
+				<table class="table table-hover my-0 sortable"  id="myTable">
+					<thead>
+						<tr class="table-dark">
+							<th scope="col"><input class="form-check-input" type="checkbox" value=""></th>
+							<th scope="col"><i class="align-middle me-2" data-feather="user"></i>Name  <i class="fas fa-sort"  style="cursor: pointer"></th>
+							<th scope="col"><i class="align-middle me-2" data-feather="mail"></i>Type  <i class="fas fa-sort"  style="cursor: pointer"></th>
+							<th scope="col"><i class="align-middle me-2" data-feather="user-check"></i>Color  <i class="fas fa-sort"  style="cursor: pointer"></th>
+							<th scope="col"><i class="align-middle me-2" data-feather="toggle-left"></i>Enable </th>
+							<th scope="col"><i class="align-middle me-2" data-feather="edit"></i>Action </th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for i in all_categories %}
+							<tr>
+								<td scope="col"><input class="form-check-input" type="checkbox" value=""></td>
+							    <td>{{i.name}}</td>
+								<td>{{i.module_type.type}}</td>
+								<td ><span ><div style="border-radius:50%;background-color:{{i.color}};height:40px;width:40px"></div></span></td>
+								<td>
+									<div class="form-check form-switch ">
+										{% if i.enable == 1 %}
+											<input class="form-check-input" type="checkbox" role="switch" value="True" name="enable" id="flexSwitchCheckDefault" checked>
+										{% else %}
+											<input class="form-check-input" type="checkbox" role="switch" value="True" name="enable" id="flexSwitchCheckDefault" >
+										{% endif %}
+									</div>
+								</td>
+								<td>
+									<div class="dropdown">
+										<a class="btn btn-LIGHT" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">...</a>
+										<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+											<li><a class="dropdown-item" href="{% url 'Accounting_Software_App:edit_category' user_id org_id company_id i.id %}">Edit</a></li>
+											<form action="{% url 'Accounting_Software_App:delete_category' user_id org_id company_id i.id %}" method="POST">{% csrf_token %}
+												<input class="dropdown-item" type="submit" value="delete" style="border:none;background-color:white" onclick="return confirm('Do you want to delete the record?');"> 
+											</form>
+										</ul>
+									</div>
+								</td>
+							</tr>
+						{% endfor %} 
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	{% else %}
+		<div class="row">
+			<div class="col-12">
+				<h3 class="text-center alert alert-warning">No Records</h3>
+			</div>
+		</div>
+	{% endif %} 
+    </div>
+</main>
+
+
+
+
+
+{% endblock content %}

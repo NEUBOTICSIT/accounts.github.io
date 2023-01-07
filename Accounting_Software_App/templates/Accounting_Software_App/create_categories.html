@@ -1,0 +1,89 @@
+{% extends 'Accounting_Software_App/base_code/base.html' %}
+{% block content %}
+{% include "Accounting_Software_App/head_content.html" %}
+{% load static %}
+            <main class="content">
+				<div class="container-fluid p-0">
+					<div class="mb-3">
+						<a href="{% url 'Accounting_Software_App:categories' user_id org_id company_id %}"><i class="align-middle me-2" data-feather="chevrons-left"></i></a><h1 class="h3 d-inline align-middle">Create Category</h1>						
+					</div>
+					<div class="row ">
+						<div class="col-12 mb-2 " style="text-align:center">
+							{%for message in messages %}
+							 <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+								<strong>Messages:</strong>{{ message }}
+								<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                             </div>
+							{% endfor %}
+						</div>
+					</div>
+					<form action="" method="POST">{% csrf_token %}	
+						<div class="row">
+							<div class="col-12 col-lg-6">
+								<div class="card">
+									<div class="card-header">
+										<h5 class="card-title mb-0"> Name</h5>
+									</div>
+									<div class="card-body">
+										<input type="text" class="form-control" name="name" value="" placeholder="Enter Name">
+									</div>
+								</div>
+							</div>						
+							<div class="col-12 col-lg-6">
+								<div class="card">
+									<div class="card-header">
+										<h5 class="card-title ">Select Type</h5>
+									</div>
+									<div class="card-body">	
+										<select class="js-select2 form-select" name="module_type" required>												
+											{% if all_module_type %}
+											{% for i in all_module_type %}
+												<option value="{{i.id}}" data-badge="">{{i.type}}</option>
+											{% endfor %}
+											{% endif %}
+										</select>
+									</div>
+								</div>						
+							</div>                      
+						</div>
+						<div class="row">
+							<div class="col-12 col-lg-6">
+								<div class="card">
+									<div class="card-header">
+										<h5 class="card-title mb-0">Color</h5>
+									</div>
+									<div class="card-body">
+										<input type="color" id="favcolor" name="color" value="#ff0000" style="width:50px">
+										
+									</div>
+								</div>
+							</div>						
+							<div class="col-12 col-lg-6">	
+								<div class="form-check form-switch mt-2">
+									<input class="form-check-input" type="checkbox" role="switch" value="True" name="enable" id="flexSwitchCheckDefault" checked>
+									<label class="form-check-label" for="flexSwitchCheckDefault">Enable</label>
+								</div>														
+							</div>                      
+						</div>
+						
+						
+													
+						</div>
+
+
+						
+
+						<hr>	
+						<div class="mt-12" style="text-align:right">
+							<a href="{% url 'Accounting_Software_App:create_categories' user_id org_id company_id %}" type="text" class="btn btn-lg btn-light">Cancel</a>  
+							<button type="submit" class="btn btn-lg btn-primary">Save</button> 
+						</div>
+						</div>
+					</form>
+				</div>
+	        </main>
+
+
+
+
+{% endblock content %}

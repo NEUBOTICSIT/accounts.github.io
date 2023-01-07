@@ -1,0 +1,136 @@
+{% extends 'Accounting_Software_App/base_code/base.html' %}
+{% block content %}
+{% include "Accounting_Software_App/head_content.html" %}
+{% load static %}
+            <main class="content">
+				<div class="container-fluid p-0">
+					<div class="mb-3">
+						<a href="{% url 'Accounting_Software_App:items' user_id org_id company_id %}"><i class="align-middle me-2" data-feather="chevrons-left"></i></a><h1 class="h3 d-inline align-middle">Edit Item</h1>						
+					</div>
+					<div class="row ">
+						<div class="col-12 mb-2 " style="text-align:center">
+							{%for message in messages %}
+							 <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+								<strong>Messages:</strong>{{ message }}
+								<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                             </div>
+							{% endfor %}
+						</div>
+					</div>
+				<form action="" method="POST" enctype="multipart/form-data">{% csrf_token %}	
+					<div class="row ">
+						<div class="form-check form-switch d-flex justify-content-end" >
+							{% if edit_info.enable == 1 %}
+							<input class="form-check-input" type="checkbox" role="switch" value="True" name="enable" id="flexSwitchCheckDefault" checked>
+							{% else %}
+							<input class="form-check-input" type="checkbox" role="switch" value="True" name="enable" id="flexSwitchCheckDefault" >
+							{% endif %}
+							<label class="form-check-label" for="flexSwitchCheckDefault">Enable</label>
+					    </div>
+					</div>	
+					<div class="row mt-4">
+						<div class="col-12 col-lg-6">
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0">Item Name</h5>
+								</div>
+								<div class="card-body">
+									<input type="text" class="form-control" name="name" value="{{edit_info.name}}" placeholder="Item Name" required>
+								</div>
+							</div>
+						</div>
+                        
+                        <div class="col-12 col-lg-6">
+								<div class="card">
+									<div class="card-header">
+										<h5 class="card-title ">Select Tax</h5>
+									</div>
+									<div class="card-body">	
+										<select class="js-select2 form-select" name="tax" required>												
+											{% if all_taxes %}
+											{% for i in all_taxes %}
+												<option value="{{i.id}}" data-badge="">{{i.name}}({{i.rate}}%)</option>
+											{% endfor %}
+											{% endif %}																	
+										</select>
+									</div>
+								</div>						
+							</div>
+					</div>										
+					<div class="row">
+					 <div class="col-12 col-lg-12">
+						<div class="card">
+							<div class="card-header">
+								<h5 class="card-title mb-0">Description</h5>
+							</div>
+							<div class="card-body">
+								<textarea type="text" class="form-control" rows="3" name="description" value="{{edit_info.description}}" required> </textarea>	
+							</div>
+						</div> 
+					 </div>
+					</div>
+					<div class="row">
+						<div class="col-12 col-lg-6">
+                          <div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0">Sale Price </h5>
+								</div>
+								<div class="card-body">
+									<input type="text" class="form-control" name="sale_price" value="{{edit_info.sale_price}}" placeholder="Enter Sale Price" required>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-lg-6">
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0">Purchase Price</h5>
+								</div>
+								<div class="card-body">
+									<input type="text" class="form-control" name="purchase_price" value="{{edit_info.purchase_price}}" placeholder="Enetr Purchase Price" required>
+								</div>
+							</div>							
+						</div>
+					</div>	
+					<div class="row">						
+						<div class="col-12 col-lg-6">
+								<div class="card">
+									<div class="card-header">
+										<h5 class="card-title ">Select Category</h5>
+									</div>
+									<div class="card-body">	
+										<select class="js-select2 form-select" name="category" required>												
+											{% if all_item_category %}
+											{% for i in all_item_category %}
+												<option value="{{i.id}}" data-badge="">{{i.name}}</option>
+											{% endfor %}
+											{% endif %}						
+										</select>
+									</div>
+								</div>						
+							</div>
+						<div class="col-12 col-lg-6">
+                          <div class="card">
+								<div class="card-header">
+									<h5 class="card-title mb-0">Upload Photo</h5>
+								</div>
+								<div class="card-body">
+									<input type="file" class="form-control" name="picture"  >
+								</div>
+							</div>
+						</div>						
+					</div>																	
+				    </div>
+				<hr>	
+					<div class="mt-12" style="text-align:right">
+						<a href="{% url 'Accounting_Software_App:items' user_id org_id company_id %}" class="btn btn-lg btn-light">Cancel</a>  
+						<button type="submit" class="btn btn-lg btn-primary">Save</button> 
+					</div>
+					</div>
+				 </form>
+				</div>
+	        </main>
+
+
+
+
+{% endblock content %}
